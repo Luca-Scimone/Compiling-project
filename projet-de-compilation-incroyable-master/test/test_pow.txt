@@ -1,0 +1,8 @@
+program test
+	var a,b,c,d : int;
+		begin
+			a := 3;
+			b := 4;
+			c := a ^ b;
+			write c;
+		end

@@ -1,0 +1,8 @@
+program test
+    var a : int
+        begin
+            	a := 5;
+            	if a > 4
+            	then write a
+	    	else write 12
+        end

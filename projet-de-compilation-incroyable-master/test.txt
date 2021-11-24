@@ -1,0 +1,15 @@
+program test
+    var i,j,maximum : int
+		begin
+		maximum := 10;
+		i := 0;
+		j := 2 ^ i;
+		while i < 4 do
+				while j <= 10 do
+				begin
+					j := j + 2;
+					if j > maximum then maximum := maximum * j;
+						i := i+1;
+				end;
+		if i > 4 then write maximum;
+		end

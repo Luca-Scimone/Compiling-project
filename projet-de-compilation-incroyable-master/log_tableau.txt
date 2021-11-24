@@ -1,0 +1,23 @@
+Nom    -   Fonction    -    Initialise    -    Adresse    -    estTempo
+VAR_ZERO  -  GLOBAL  -    1     -     0     -   0 
+
+VAR_AT  -  GLOBAL  -    1     -     1     -   0 
+
+VAR_V0  -  GLOBAL  -    1     -     2     -   0 
+
+VAR_V1  -  GLOBAL  -    1     -     3     -   0 
+
+VAR_A0  -  GLOBAL  -    1     -     4     -   0 
+
+VAR_A1  -  GLOBAL  -    1     -     5     -   0 
+
+VAR_A2  -  GLOBAL  -    1     -     6     -   0 
+
+VAR_A3  -  GLOBAL  -    1     -     7     -   0 
+
+c  -  GLOBAL  -    0     -     8     -   0 
+
+b  -  GLOBAL  -    0     -     9     -   0 
+
+a  -  GLOBAL  -    0     -     10     -   0 
+

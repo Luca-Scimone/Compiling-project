@@ -1,0 +1,7 @@
+program test
+    var a : int;
+    begin
+        read a;
+				a := a * 2;
+        write a;
+    end

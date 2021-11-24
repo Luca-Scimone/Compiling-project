@@ -1,0 +1,8 @@
+program test
+    var a,b,c : int
+    function oui () : int
+    return 1;
+
+    begin
+	write oui()
+    end

@@ -1,0 +1,2504 @@
+Terminaux inutilisés dans la grammaire
+
+    CHAINE
+    '\n'
+    UMOINS
+
+
+État 77 conflits: 5 décalage/réduction
+État 78 conflits: 5 décalage/réduction
+État 113 conflits: 14 décalage/réduction
+État 114 conflits: 14 décalage/réduction
+État 115 conflits: 5 décalage/réduction
+État 116 conflits: 5 décalage/réduction
+État 117 conflits: 5 décalage/réduction
+État 118 conflits: 5 décalage/réduction
+État 119 conflits: 5 décalage/réduction
+État 120 conflits: 5 décalage/réduction
+État 121 conflits: 5 décalage/réduction
+État 122 conflits: 5 décalage/réduction
+État 123 conflits: 5 décalage/réduction
+État 124 conflits: 14 décalage/réduction
+État 125 conflits: 14 décalage/réduction
+État 126 conflits: 14 décalage/réduction
+État 127 conflits: 1 décalage/réduction
+
+
+Grammaire
+
+    0 $accept: program $end
+
+    1 $@1: %empty
+
+    2 $@2: %empty
+
+    3 $@3: %empty
+
+    4 program: $@1 PROG IDENT vardecllist fundecllist $@2 instr $@3
+
+    5 vardecllist: %empty
+    6            | vardecl
+    7            | vardecl ';' vardecllist
+
+    8 vardecl: VAR identlist ':' typename
+
+    9 identlist: IDENT
+   10          | IDENT ',' identlist
+
+   11 typename: atomictype
+   12         | arraytype
+
+   13 atomictype: UNIT
+   14           | BOOL
+   15           | INT
+
+   16 arraytype: ARRAY '[' rangelist ']' OF atomictype
+
+   17 rangelist: ENTIER '.' '.' ENTIER
+   18          | ENTIER '.' '.' ENTIER ',' rangelist
+
+   19 fundecllist: %empty
+   20            | fundecl ';' fundecllist
+
+   21 $@4: %empty
+
+   22 $@5: %empty
+
+   23 fundecl: FUNCT IDENT '(' parlist ')' ':' atomictype $@4 $@5 vardecllist instr
+
+   24 parlist: %empty
+   25        | par
+   26        | par ',' parlist
+
+   27 par: IDENT ':' typename
+   28    | REF IDENT ':' typename
+
+   29 instr: IF expA THEN instr B C
+   30      | IF expA THEN instr ELSE B instr C
+   31      | WHILE D expE DO instr F
+   32      | lvalue EQ expr
+   33      | RET expr
+   34      | RET
+   35      | IDENT '(' exprlist ')'
+   36      | IDENT '(' ')'
+   37      | BEG sequence END
+   38      | BEG END
+   39      | READ lvalue
+   40      | WRITE expr
+
+   41 expA: expr
+
+   42 B: %empty
+
+   43 C: %empty
+
+   44 D: %empty
+
+   45 expE: expr
+
+   46 F: %empty
+
+   47 sequence: instr ';' sequence
+   48         | instr ';'
+   49         | instr
+
+   50 lvalue: IDENT
+   51       | IDENT '[' exprlist ']'
+
+   52 exprlist: expr
+   53         | expr ',' exprlist
+
+   54 expr: ENTIER
+   55     | BOOLEEN
+   56     | '(' expr ')'
+   57     | expr '+' expr
+   58     | expr '*' expr
+   59     | expr '-' expr
+   60     | '-' expr
+   61     | expr '/' expr
+   62     | expr '^' expr
+   63     | expr '<' expr
+   64     | expr '>' expr
+   65     | expr INF expr
+   66     | expr SUPP expr
+   67     | expr '=' expr
+   68     | expr DIFF expr
+   69     | expr AND expr
+   70     | expr OR expr
+   71     | expr XOR expr
+   72     | NOT expr
+
+   73 $@6: %empty
+
+   74 expr: IDENT '(' exprlist ')' $@6
+   75     | IDENT '(' ')'
+   76     | IDENT '[' exprlist ']'
+   77     | IDENT
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+    $end (0) 0
+    '\n' (10)
+    '(' (40) 23 35 36 56 74 75
+    ')' (41) 23 35 36 56 74 75
+    '*' (42) 58
+    '+' (43) 57
+    ',' (44) 10 18 26 53
+    '-' (45) 59 60
+    '.' (46) 17 18
+    '/' (47) 61
+    ':' (58) 8 23 27 28
+    ';' (59) 7 20 47 48
+    '<' (60) 63
+    '=' (61) 67
+    '>' (62) 64
+    '[' (91) 16 51 76
+    ']' (93) 16 51 76
+    '^' (94) 62
+    error (256)
+    ENTIER <value> (258) 17 18 54
+    BOOLEEN <value> (259) 55
+    IDENT <id> (260) 4 9 10 23 27 28 35 36 50 51 74 75 76 77
+    CHAINE <id> (261)
+    INT (262) 15
+    BOOL (263) 14
+    UNIT (264) 13
+    ARRAY (265) 16
+    OF (266) 16
+    VAR (267) 8
+    PROG (268) 4
+    REF (269) 28
+    RET (270) 33 34
+    FUNCT (271) 23
+    IF (272) 29 30
+    THEN (273) 29 30
+    ELSE (274) 30
+    WHILE (275) 31
+    BEG (276) 37 38
+    END (277) 37 38
+    READ (278) 39
+    WRITE (279) 40
+    DO (280) 31
+    EQ (281) 32
+    INF (282) 65
+    SUPP (283) 66
+    DIFF (284) 68
+    OR (285) 70
+    XOR (286) 71
+    AND (287) 69
+    UMOINS (288)
+    NOT (289) 72
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+    $accept (52)
+        à gauche: 0
+    program (53)
+        à gauche: 4
+        à droite: 0
+    $@1 (54)
+        à gauche: 1
+        à droite: 4
+    $@2 (55)
+        à gauche: 2
+        à droite: 4
+    $@3 (56)
+        à gauche: 3
+        à droite: 4
+    vardecllist (57)
+        à gauche: 5 6 7
+        à droite: 4 7 23
+    vardecl (58)
+        à gauche: 8
+        à droite: 6 7
+    identlist <idlist> (59)
+        à gauche: 9 10
+        à droite: 8 10
+    typename <typevar> (60)
+        à gauche: 11 12
+        à droite: 8 27 28
+    atomictype <index> (61)
+        à gauche: 13 14 15
+        à droite: 11 16 23
+    arraytype <typevar> (62)
+        à gauche: 16
+        à droite: 12
+    rangelist <typevar> (63)
+        à gauche: 17 18
+        à droite: 16 18
+    fundecllist (64)
+        à gauche: 19 20
+        à droite: 4 20
+    fundecl (65)
+        à gauche: 23
+        à droite: 20
+    $@4 (66)
+        à gauche: 21
+        à droite: 23
+    $@5 (67)
+        à gauche: 22
+        à droite: 23
+    parlist (68)
+        à gauche: 24 25 26
+        à droite: 23 26
+    par <index> (69)
+        à gauche: 27 28
+        à droite: 25 26
+    instr (70)
+        à gauche: 29 30 31 32 33 34 35 36 37 38 39 40
+        à droite: 4 23 29 30 31 47 48 49
+    expA (71)
+        à gauche: 41
+        à droite: 29 30
+    B (72)
+        à gauche: 42
+        à droite: 29 30
+    C (73)
+        à gauche: 43
+        à droite: 29 30
+    D (74)
+        à gauche: 44
+        à droite: 31
+    expE (75)
+        à gauche: 45
+        à droite: 31
+    F (76)
+        à gauche: 46
+        à droite: 31
+    sequence (77)
+        à gauche: 47 48 49
+        à droite: 37 47
+    lvalue <index> (78)
+        à gauche: 50 51
+        à droite: 32 39
+    exprlist <explist> (79)
+        à gauche: 52 53
+        à droite: 35 51 53 74 76
+    expr <index> (80)
+        à gauche: 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 74 75 76 77
+        à droite: 32 33 40 41 45 52 53 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72
+    $@6 (81)
+        à gauche: 73
+        à droite: 74
+
+
+État 0
+
+    0 $accept: . program $end
+
+    $défaut  réduction par utilisation de la règle 1 ($@1)
+
+    program  aller à l'état 1
+    $@1      aller à l'état 2
+
+
+État 1
+
+    0 $accept: program . $end
+
+    $end  décalage et aller à l'état 3
+
+
+État 2
+
+    4 program: $@1 . PROG IDENT vardecllist fundecllist $@2 instr $@3
+
+    PROG  décalage et aller à l'état 4
+
+
+État 3
+
+    0 $accept: program $end .
+
+    $défaut  accepter
+
+
+État 4
+
+    4 program: $@1 PROG . IDENT vardecllist fundecllist $@2 instr $@3
+
+    IDENT  décalage et aller à l'état 5
+
+
+État 5
+
+    4 program: $@1 PROG IDENT . vardecllist fundecllist $@2 instr $@3
+
+    VAR  décalage et aller à l'état 6
+
+    $défaut  réduction par utilisation de la règle 5 (vardecllist)
+
+    vardecllist  aller à l'état 7
+    vardecl      aller à l'état 8
+
+
+État 6
+
+    8 vardecl: VAR . identlist ':' typename
+
+    IDENT  décalage et aller à l'état 9
+
+    identlist  aller à l'état 10
+
+
+État 7
+
+    4 program: $@1 PROG IDENT vardecllist . fundecllist $@2 instr $@3
+
+    FUNCT  décalage et aller à l'état 11
+
+    $défaut  réduction par utilisation de la règle 19 (fundecllist)
+
+    fundecllist  aller à l'état 12
+    fundecl      aller à l'état 13
+
+
+État 8
+
+    6 vardecllist: vardecl .
+    7            | vardecl . ';' vardecllist
+
+    ';'  décalage et aller à l'état 14
+
+    $défaut  réduction par utilisation de la règle 6 (vardecllist)
+
+
+État 9
+
+    9 identlist: IDENT .
+   10          | IDENT . ',' identlist
+
+    ','  décalage et aller à l'état 15
+
+    $défaut  réduction par utilisation de la règle 9 (identlist)
+
+
+État 10
+
+    8 vardecl: VAR identlist . ':' typename
+
+    ':'  décalage et aller à l'état 16
+
+
+État 11
+
+   23 fundecl: FUNCT . IDENT '(' parlist ')' ':' atomictype $@4 $@5 vardecllist instr
+
+    IDENT  décalage et aller à l'état 17
+
+
+État 12
+
+    4 program: $@1 PROG IDENT vardecllist fundecllist . $@2 instr $@3
+
+    $défaut  réduction par utilisation de la règle 2 ($@2)
+
+    $@2  aller à l'état 18
+
+
+État 13
+
+   20 fundecllist: fundecl . ';' fundecllist
+
+    ';'  décalage et aller à l'état 19
+
+
+État 14
+
+    7 vardecllist: vardecl ';' . vardecllist
+
+    VAR  décalage et aller à l'état 6
+
+    $défaut  réduction par utilisation de la règle 5 (vardecllist)
+
+    vardecllist  aller à l'état 20
+    vardecl      aller à l'état 8
+
+
+État 15
+
+   10 identlist: IDENT ',' . identlist
+
+    IDENT  décalage et aller à l'état 9
+
+    identlist  aller à l'état 21
+
+
+État 16
+
+    8 vardecl: VAR identlist ':' . typename
+
+    INT    décalage et aller à l'état 22
+    BOOL   décalage et aller à l'état 23
+    UNIT   décalage et aller à l'état 24
+    ARRAY  décalage et aller à l'état 25
+
+    typename    aller à l'état 26
+    atomictype  aller à l'état 27
+    arraytype   aller à l'état 28
+
+
+État 17
+
+   23 fundecl: FUNCT IDENT . '(' parlist ')' ':' atomictype $@4 $@5 vardecllist instr
+
+    '('  décalage et aller à l'état 29
+
+
+État 18
+
+    4 program: $@1 PROG IDENT vardecllist fundecllist $@2 . instr $@3
+
+    IDENT  décalage et aller à l'état 30
+    RET    décalage et aller à l'état 31
+    IF     décalage et aller à l'état 32
+    WHILE  décalage et aller à l'état 33
+    BEG    décalage et aller à l'état 34
+    READ   décalage et aller à l'état 35
+    WRITE  décalage et aller à l'état 36
+
+    instr   aller à l'état 37
+    lvalue  aller à l'état 38
+
+
+État 19
+
+   20 fundecllist: fundecl ';' . fundecllist
+
+    FUNCT  décalage et aller à l'état 11
+
+    $défaut  réduction par utilisation de la règle 19 (fundecllist)
+
+    fundecllist  aller à l'état 39
+    fundecl      aller à l'état 13
+
+
+État 20
+
+    7 vardecllist: vardecl ';' vardecllist .
+
+    $défaut  réduction par utilisation de la règle 7 (vardecllist)
+
+
+État 21
+
+   10 identlist: IDENT ',' identlist .
+
+    $défaut  réduction par utilisation de la règle 10 (identlist)
+
+
+État 22
+
+   15 atomictype: INT .
+
+    $défaut  réduction par utilisation de la règle 15 (atomictype)
+
+
+État 23
+
+   14 atomictype: BOOL .
+
+    $défaut  réduction par utilisation de la règle 14 (atomictype)
+
+
+État 24
+
+   13 atomictype: UNIT .
+
+    $défaut  réduction par utilisation de la règle 13 (atomictype)
+
+
+État 25
+
+   16 arraytype: ARRAY . '[' rangelist ']' OF atomictype
+
+    '['  décalage et aller à l'état 40
+
+
+État 26
+
+    8 vardecl: VAR identlist ':' typename .
+
+    $défaut  réduction par utilisation de la règle 8 (vardecl)
+
+
+État 27
+
+   11 typename: atomictype .
+
+    $défaut  réduction par utilisation de la règle 11 (typename)
+
+
+État 28
+
+   12 typename: arraytype .
+
+    $défaut  réduction par utilisation de la règle 12 (typename)
+
+
+État 29
+
+   23 fundecl: FUNCT IDENT '(' . parlist ')' ':' atomictype $@4 $@5 vardecllist instr
+
+    IDENT  décalage et aller à l'état 41
+    REF    décalage et aller à l'état 42
+
+    $défaut  réduction par utilisation de la règle 24 (parlist)
+
+    parlist  aller à l'état 43
+    par      aller à l'état 44
+
+
+État 30
+
+   35 instr: IDENT . '(' exprlist ')'
+   36      | IDENT . '(' ')'
+   50 lvalue: IDENT .
+   51       | IDENT . '[' exprlist ']'
+
+    '['  décalage et aller à l'état 45
+    '('  décalage et aller à l'état 46
+
+    $défaut  réduction par utilisation de la règle 50 (lvalue)
+
+
+État 31
+
+   33 instr: RET . expr
+   34      | RET .
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    $défaut  réduction par utilisation de la règle 34 (instr)
+
+    expr  aller à l'état 53
+
+
+État 32
+
+   29 instr: IF . expA THEN instr B C
+   30      | IF . expA THEN instr ELSE B instr C
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expA  aller à l'état 54
+    expr  aller à l'état 55
+
+
+État 33
+
+   31 instr: WHILE . D expE DO instr F
+
+    $défaut  réduction par utilisation de la règle 44 (D)
+
+    D  aller à l'état 56
+
+
+État 34
+
+   37 instr: BEG . sequence END
+   38      | BEG . END
+
+    IDENT  décalage et aller à l'état 30
+    RET    décalage et aller à l'état 31
+    IF     décalage et aller à l'état 32
+    WHILE  décalage et aller à l'état 33
+    BEG    décalage et aller à l'état 34
+    END    décalage et aller à l'état 57
+    READ   décalage et aller à l'état 35
+    WRITE  décalage et aller à l'état 36
+
+    instr     aller à l'état 58
+    sequence  aller à l'état 59
+    lvalue    aller à l'état 38
+
+
+État 35
+
+   39 instr: READ . lvalue
+
+    IDENT  décalage et aller à l'état 60
+
+    lvalue  aller à l'état 61
+
+
+État 36
+
+   40 instr: WRITE . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 62
+
+
+État 37
+
+    4 program: $@1 PROG IDENT vardecllist fundecllist $@2 instr . $@3
+
+    $défaut  réduction par utilisation de la règle 3 ($@3)
+
+    $@3  aller à l'état 63
+
+
+État 38
+
+   32 instr: lvalue . EQ expr
+
+    EQ  décalage et aller à l'état 64
+
+
+État 39
+
+   20 fundecllist: fundecl ';' fundecllist .
+
+    $défaut  réduction par utilisation de la règle 20 (fundecllist)
+
+
+État 40
+
+   16 arraytype: ARRAY '[' . rangelist ']' OF atomictype
+
+    ENTIER  décalage et aller à l'état 65
+
+    rangelist  aller à l'état 66
+
+
+État 41
+
+   27 par: IDENT . ':' typename
+
+    ':'  décalage et aller à l'état 67
+
+
+État 42
+
+   28 par: REF . IDENT ':' typename
+
+    IDENT  décalage et aller à l'état 68
+
+
+État 43
+
+   23 fundecl: FUNCT IDENT '(' parlist . ')' ':' atomictype $@4 $@5 vardecllist instr
+
+    ')'  décalage et aller à l'état 69
+
+
+État 44
+
+   25 parlist: par .
+   26        | par . ',' parlist
+
+    ','  décalage et aller à l'état 70
+
+    $défaut  réduction par utilisation de la règle 25 (parlist)
+
+
+État 45
+
+   51 lvalue: IDENT '[' . exprlist ']'
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    exprlist  aller à l'état 71
+    expr      aller à l'état 72
+
+
+État 46
+
+   35 instr: IDENT '(' . exprlist ')'
+   36      | IDENT '(' . ')'
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+    ')'      décalage et aller à l'état 73
+
+    exprlist  aller à l'état 74
+    expr      aller à l'état 72
+
+
+État 47
+
+   54 expr: ENTIER .
+
+    $défaut  réduction par utilisation de la règle 54 (expr)
+
+
+État 48
+
+   55 expr: BOOLEEN .
+
+    $défaut  réduction par utilisation de la règle 55 (expr)
+
+
+État 49
+
+   74 expr: IDENT . '(' exprlist ')' $@6
+   75     | IDENT . '(' ')'
+   76     | IDENT . '[' exprlist ']'
+   77     | IDENT .
+
+    '['  décalage et aller à l'état 75
+    '('  décalage et aller à l'état 76
+
+    $défaut  réduction par utilisation de la règle 77 (expr)
+
+
+État 50
+
+   60 expr: '-' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 77
+
+
+État 51
+
+   72 expr: NOT . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 78
+
+
+État 52
+
+   56 expr: '(' . expr ')'
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 79
+
+
+État 53
+
+   33 instr: RET expr .
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    $défaut  réduction par utilisation de la règle 33 (instr)
+
+
+État 54
+
+   29 instr: IF expA . THEN instr B C
+   30      | IF expA . THEN instr ELSE B instr C
+
+    THEN  décalage et aller à l'état 94
+
+
+État 55
+
+   41 expA: expr .
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    $défaut  réduction par utilisation de la règle 41 (expA)
+
+
+État 56
+
+   31 instr: WHILE D . expE DO instr F
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expE  aller à l'état 95
+    expr  aller à l'état 96
+
+
+État 57
+
+   38 instr: BEG END .
+
+    $défaut  réduction par utilisation de la règle 38 (instr)
+
+
+État 58
+
+   47 sequence: instr . ';' sequence
+   48         | instr . ';'
+   49         | instr .
+
+    ';'  décalage et aller à l'état 97
+
+    $défaut  réduction par utilisation de la règle 49 (sequence)
+
+
+État 59
+
+   37 instr: BEG sequence . END
+
+    END  décalage et aller à l'état 98
+
+
+État 60
+
+   50 lvalue: IDENT .
+   51       | IDENT . '[' exprlist ']'
+
+    '['  décalage et aller à l'état 45
+
+    $défaut  réduction par utilisation de la règle 50 (lvalue)
+
+
+État 61
+
+   39 instr: READ lvalue .
+
+    $défaut  réduction par utilisation de la règle 39 (instr)
+
+
+État 62
+
+   40 instr: WRITE expr .
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    $défaut  réduction par utilisation de la règle 40 (instr)
+
+
+État 63
+
+    4 program: $@1 PROG IDENT vardecllist fundecllist $@2 instr $@3 .
+
+    $défaut  réduction par utilisation de la règle 4 (program)
+
+
+État 64
+
+   32 instr: lvalue EQ . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 99
+
+
+État 65
+
+   17 rangelist: ENTIER . '.' '.' ENTIER
+   18          | ENTIER . '.' '.' ENTIER ',' rangelist
+
+    '.'  décalage et aller à l'état 100
+
+
+État 66
+
+   16 arraytype: ARRAY '[' rangelist . ']' OF atomictype
+
+    ']'  décalage et aller à l'état 101
+
+
+État 67
+
+   27 par: IDENT ':' . typename
+
+    INT    décalage et aller à l'état 22
+    BOOL   décalage et aller à l'état 23
+    UNIT   décalage et aller à l'état 24
+    ARRAY  décalage et aller à l'état 25
+
+    typename    aller à l'état 102
+    atomictype  aller à l'état 27
+    arraytype   aller à l'état 28
+
+
+État 68
+
+   28 par: REF IDENT . ':' typename
+
+    ':'  décalage et aller à l'état 103
+
+
+État 69
+
+   23 fundecl: FUNCT IDENT '(' parlist ')' . ':' atomictype $@4 $@5 vardecllist instr
+
+    ':'  décalage et aller à l'état 104
+
+
+État 70
+
+   26 parlist: par ',' . parlist
+
+    IDENT  décalage et aller à l'état 41
+    REF    décalage et aller à l'état 42
+
+    $défaut  réduction par utilisation de la règle 24 (parlist)
+
+    parlist  aller à l'état 105
+    par      aller à l'état 44
+
+
+État 71
+
+   51 lvalue: IDENT '[' exprlist . ']'
+
+    ']'  décalage et aller à l'état 106
+
+
+État 72
+
+   52 exprlist: expr .
+   53         | expr . ',' exprlist
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    ','   décalage et aller à l'état 107
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    $défaut  réduction par utilisation de la règle 52 (exprlist)
+
+
+État 73
+
+   36 instr: IDENT '(' ')' .
+
+    $défaut  réduction par utilisation de la règle 36 (instr)
+
+
+État 74
+
+   35 instr: IDENT '(' exprlist . ')'
+
+    ')'  décalage et aller à l'état 108
+
+
+État 75
+
+   76 expr: IDENT '[' . exprlist ']'
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    exprlist  aller à l'état 109
+    expr      aller à l'état 72
+
+
+État 76
+
+   74 expr: IDENT '(' . exprlist ')' $@6
+   75     | IDENT '(' . ')'
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+    ')'      décalage et aller à l'état 110
+
+    exprlist  aller à l'état 111
+    expr      aller à l'état 72
+
+
+État 77
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   60     | '-' expr .
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 60 (expr)]
+    SUPP      [réduction par utilisation de la règle 60 (expr)]
+    '<'       [réduction par utilisation de la règle 60 (expr)]
+    '>'       [réduction par utilisation de la règle 60 (expr)]
+    '='       [réduction par utilisation de la règle 60 (expr)]
+    $défaut  réduction par utilisation de la règle 60 (expr)
+
+
+État 78
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+   72     | NOT expr .
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 72 (expr)]
+    SUPP      [réduction par utilisation de la règle 72 (expr)]
+    '<'       [réduction par utilisation de la règle 72 (expr)]
+    '>'       [réduction par utilisation de la règle 72 (expr)]
+    '='       [réduction par utilisation de la règle 72 (expr)]
+    $défaut  réduction par utilisation de la règle 72 (expr)
+
+
+État 79
+
+   56 expr: '(' expr . ')'
+   57     | expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    ')'   décalage et aller à l'état 112
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+
+État 80
+
+   65 expr: expr INF . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 113
+
+
+État 81
+
+   66 expr: expr SUPP . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 114
+
+
+État 82
+
+   68 expr: expr DIFF . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 115
+
+
+État 83
+
+   57 expr: expr '+' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 116
+
+
+État 84
+
+   59 expr: expr '-' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 117
+
+
+État 85
+
+   70 expr: expr OR . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 118
+
+
+État 86
+
+   71 expr: expr XOR . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 119
+
+
+État 87
+
+   58 expr: expr '*' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 120
+
+
+État 88
+
+   61 expr: expr '/' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 121
+
+
+État 89
+
+   69 expr: expr AND . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 122
+
+
+État 90
+
+   62 expr: expr '^' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 123
+
+
+État 91
+
+   63 expr: expr '<' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 124
+
+
+État 92
+
+   64 expr: expr '>' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 125
+
+
+État 93
+
+   67 expr: expr '=' . expr
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    expr  aller à l'état 126
+
+
+État 94
+
+   29 instr: IF expA THEN . instr B C
+   30      | IF expA THEN . instr ELSE B instr C
+
+    IDENT  décalage et aller à l'état 30
+    RET    décalage et aller à l'état 31
+    IF     décalage et aller à l'état 32
+    WHILE  décalage et aller à l'état 33
+    BEG    décalage et aller à l'état 34
+    READ   décalage et aller à l'état 35
+    WRITE  décalage et aller à l'état 36
+
+    instr   aller à l'état 127
+    lvalue  aller à l'état 38
+
+
+État 95
+
+   31 instr: WHILE D expE . DO instr F
+
+    DO  décalage et aller à l'état 128
+
+
+État 96
+
+   45 expE: expr .
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    $défaut  réduction par utilisation de la règle 45 (expE)
+
+
+État 97
+
+   47 sequence: instr ';' . sequence
+   48         | instr ';' .
+
+    IDENT  décalage et aller à l'état 30
+    RET    décalage et aller à l'état 31
+    IF     décalage et aller à l'état 32
+    WHILE  décalage et aller à l'état 33
+    BEG    décalage et aller à l'état 34
+    READ   décalage et aller à l'état 35
+    WRITE  décalage et aller à l'état 36
+
+    $défaut  réduction par utilisation de la règle 48 (sequence)
+
+    instr     aller à l'état 58
+    sequence  aller à l'état 129
+    lvalue    aller à l'état 38
+
+
+État 98
+
+   37 instr: BEG sequence END .
+
+    $défaut  réduction par utilisation de la règle 37 (instr)
+
+
+État 99
+
+   32 instr: lvalue EQ expr .
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    $défaut  réduction par utilisation de la règle 32 (instr)
+
+
+État 100
+
+   17 rangelist: ENTIER '.' . '.' ENTIER
+   18          | ENTIER '.' . '.' ENTIER ',' rangelist
+
+    '.'  décalage et aller à l'état 130
+
+
+État 101
+
+   16 arraytype: ARRAY '[' rangelist ']' . OF atomictype
+
+    OF  décalage et aller à l'état 131
+
+
+État 102
+
+   27 par: IDENT ':' typename .
+
+    $défaut  réduction par utilisation de la règle 27 (par)
+
+
+État 103
+
+   28 par: REF IDENT ':' . typename
+
+    INT    décalage et aller à l'état 22
+    BOOL   décalage et aller à l'état 23
+    UNIT   décalage et aller à l'état 24
+    ARRAY  décalage et aller à l'état 25
+
+    typename    aller à l'état 132
+    atomictype  aller à l'état 27
+    arraytype   aller à l'état 28
+
+
+État 104
+
+   23 fundecl: FUNCT IDENT '(' parlist ')' ':' . atomictype $@4 $@5 vardecllist instr
+
+    INT   décalage et aller à l'état 22
+    BOOL  décalage et aller à l'état 23
+    UNIT  décalage et aller à l'état 24
+
+    atomictype  aller à l'état 133
+
+
+État 105
+
+   26 parlist: par ',' parlist .
+
+    $défaut  réduction par utilisation de la règle 26 (parlist)
+
+
+État 106
+
+   51 lvalue: IDENT '[' exprlist ']' .
+
+    $défaut  réduction par utilisation de la règle 51 (lvalue)
+
+
+État 107
+
+   53 exprlist: expr ',' . exprlist
+
+    ENTIER   décalage et aller à l'état 47
+    BOOLEEN  décalage et aller à l'état 48
+    IDENT    décalage et aller à l'état 49
+    '-'      décalage et aller à l'état 50
+    NOT      décalage et aller à l'état 51
+    '('      décalage et aller à l'état 52
+
+    exprlist  aller à l'état 134
+    expr      aller à l'état 72
+
+
+État 108
+
+   35 instr: IDENT '(' exprlist ')' .
+
+    $défaut  réduction par utilisation de la règle 35 (instr)
+
+
+État 109
+
+   76 expr: IDENT '[' exprlist . ']'
+
+    ']'  décalage et aller à l'état 135
+
+
+État 110
+
+   75 expr: IDENT '(' ')' .
+
+    $défaut  réduction par utilisation de la règle 75 (expr)
+
+
+État 111
+
+   74 expr: IDENT '(' exprlist . ')' $@6
+
+    ')'  décalage et aller à l'état 136
+
+
+État 112
+
+   56 expr: '(' expr ')' .
+
+    $défaut  réduction par utilisation de la règle 56 (expr)
+
+
+État 113
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   65     | expr INF expr .
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 65 (expr)]
+    SUPP      [réduction par utilisation de la règle 65 (expr)]
+    DIFF      [réduction par utilisation de la règle 65 (expr)]
+    '+'       [réduction par utilisation de la règle 65 (expr)]
+    '-'       [réduction par utilisation de la règle 65 (expr)]
+    OR        [réduction par utilisation de la règle 65 (expr)]
+    XOR       [réduction par utilisation de la règle 65 (expr)]
+    '*'       [réduction par utilisation de la règle 65 (expr)]
+    '/'       [réduction par utilisation de la règle 65 (expr)]
+    AND       [réduction par utilisation de la règle 65 (expr)]
+    '^'       [réduction par utilisation de la règle 65 (expr)]
+    '<'       [réduction par utilisation de la règle 65 (expr)]
+    '>'       [réduction par utilisation de la règle 65 (expr)]
+    '='       [réduction par utilisation de la règle 65 (expr)]
+    $défaut  réduction par utilisation de la règle 65 (expr)
+
+
+État 114
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   66     | expr SUPP expr .
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 66 (expr)]
+    SUPP      [réduction par utilisation de la règle 66 (expr)]
+    DIFF      [réduction par utilisation de la règle 66 (expr)]
+    '+'       [réduction par utilisation de la règle 66 (expr)]
+    '-'       [réduction par utilisation de la règle 66 (expr)]
+    OR        [réduction par utilisation de la règle 66 (expr)]
+    XOR       [réduction par utilisation de la règle 66 (expr)]
+    '*'       [réduction par utilisation de la règle 66 (expr)]
+    '/'       [réduction par utilisation de la règle 66 (expr)]
+    AND       [réduction par utilisation de la règle 66 (expr)]
+    '^'       [réduction par utilisation de la règle 66 (expr)]
+    '<'       [réduction par utilisation de la règle 66 (expr)]
+    '>'       [réduction par utilisation de la règle 66 (expr)]
+    '='       [réduction par utilisation de la règle 66 (expr)]
+    $défaut  réduction par utilisation de la règle 66 (expr)
+
+
+État 115
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   68     | expr DIFF expr .
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    DIFF  erreur (non-associative)
+
+    INF       [réduction par utilisation de la règle 68 (expr)]
+    SUPP      [réduction par utilisation de la règle 68 (expr)]
+    '<'       [réduction par utilisation de la règle 68 (expr)]
+    '>'       [réduction par utilisation de la règle 68 (expr)]
+    '='       [réduction par utilisation de la règle 68 (expr)]
+    $défaut  réduction par utilisation de la règle 68 (expr)
+
+
+État 116
+
+   57 expr: expr . '+' expr
+   57     | expr '+' expr .
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 57 (expr)]
+    SUPP      [réduction par utilisation de la règle 57 (expr)]
+    '<'       [réduction par utilisation de la règle 57 (expr)]
+    '>'       [réduction par utilisation de la règle 57 (expr)]
+    '='       [réduction par utilisation de la règle 57 (expr)]
+    $défaut  réduction par utilisation de la règle 57 (expr)
+
+
+État 117
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   59     | expr '-' expr .
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 59 (expr)]
+    SUPP      [réduction par utilisation de la règle 59 (expr)]
+    '<'       [réduction par utilisation de la règle 59 (expr)]
+    '>'       [réduction par utilisation de la règle 59 (expr)]
+    '='       [réduction par utilisation de la règle 59 (expr)]
+    $défaut  réduction par utilisation de la règle 59 (expr)
+
+
+État 118
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   70     | expr OR expr .
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 70 (expr)]
+    SUPP      [réduction par utilisation de la règle 70 (expr)]
+    '<'       [réduction par utilisation de la règle 70 (expr)]
+    '>'       [réduction par utilisation de la règle 70 (expr)]
+    '='       [réduction par utilisation de la règle 70 (expr)]
+    $défaut  réduction par utilisation de la règle 70 (expr)
+
+
+État 119
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+   71     | expr XOR expr .
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 71 (expr)]
+    SUPP      [réduction par utilisation de la règle 71 (expr)]
+    '<'       [réduction par utilisation de la règle 71 (expr)]
+    '>'       [réduction par utilisation de la règle 71 (expr)]
+    '='       [réduction par utilisation de la règle 71 (expr)]
+    $défaut  réduction par utilisation de la règle 71 (expr)
+
+
+État 120
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   58     | expr '*' expr .
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 58 (expr)]
+    SUPP      [réduction par utilisation de la règle 58 (expr)]
+    '<'       [réduction par utilisation de la règle 58 (expr)]
+    '>'       [réduction par utilisation de la règle 58 (expr)]
+    '='       [réduction par utilisation de la règle 58 (expr)]
+    $défaut  réduction par utilisation de la règle 58 (expr)
+
+
+État 121
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   61     | expr '/' expr .
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 61 (expr)]
+    SUPP      [réduction par utilisation de la règle 61 (expr)]
+    '<'       [réduction par utilisation de la règle 61 (expr)]
+    '>'       [réduction par utilisation de la règle 61 (expr)]
+    '='       [réduction par utilisation de la règle 61 (expr)]
+    $défaut  réduction par utilisation de la règle 61 (expr)
+
+
+État 122
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   69     | expr AND expr .
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 69 (expr)]
+    SUPP      [réduction par utilisation de la règle 69 (expr)]
+    '<'       [réduction par utilisation de la règle 69 (expr)]
+    '>'       [réduction par utilisation de la règle 69 (expr)]
+    '='       [réduction par utilisation de la règle 69 (expr)]
+    $défaut  réduction par utilisation de la règle 69 (expr)
+
+
+État 123
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   62     | expr '^' expr .
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 62 (expr)]
+    SUPP      [réduction par utilisation de la règle 62 (expr)]
+    '<'       [réduction par utilisation de la règle 62 (expr)]
+    '>'       [réduction par utilisation de la règle 62 (expr)]
+    '='       [réduction par utilisation de la règle 62 (expr)]
+    $défaut  réduction par utilisation de la règle 62 (expr)
+
+
+État 124
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   63     | expr '<' expr .
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 63 (expr)]
+    SUPP      [réduction par utilisation de la règle 63 (expr)]
+    DIFF      [réduction par utilisation de la règle 63 (expr)]
+    '+'       [réduction par utilisation de la règle 63 (expr)]
+    '-'       [réduction par utilisation de la règle 63 (expr)]
+    OR        [réduction par utilisation de la règle 63 (expr)]
+    XOR       [réduction par utilisation de la règle 63 (expr)]
+    '*'       [réduction par utilisation de la règle 63 (expr)]
+    '/'       [réduction par utilisation de la règle 63 (expr)]
+    AND       [réduction par utilisation de la règle 63 (expr)]
+    '^'       [réduction par utilisation de la règle 63 (expr)]
+    '<'       [réduction par utilisation de la règle 63 (expr)]
+    '>'       [réduction par utilisation de la règle 63 (expr)]
+    '='       [réduction par utilisation de la règle 63 (expr)]
+    $défaut  réduction par utilisation de la règle 63 (expr)
+
+
+État 125
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   64     | expr '>' expr .
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 64 (expr)]
+    SUPP      [réduction par utilisation de la règle 64 (expr)]
+    DIFF      [réduction par utilisation de la règle 64 (expr)]
+    '+'       [réduction par utilisation de la règle 64 (expr)]
+    '-'       [réduction par utilisation de la règle 64 (expr)]
+    OR        [réduction par utilisation de la règle 64 (expr)]
+    XOR       [réduction par utilisation de la règle 64 (expr)]
+    '*'       [réduction par utilisation de la règle 64 (expr)]
+    '/'       [réduction par utilisation de la règle 64 (expr)]
+    AND       [réduction par utilisation de la règle 64 (expr)]
+    '^'       [réduction par utilisation de la règle 64 (expr)]
+    '<'       [réduction par utilisation de la règle 64 (expr)]
+    '>'       [réduction par utilisation de la règle 64 (expr)]
+    '='       [réduction par utilisation de la règle 64 (expr)]
+    $défaut  réduction par utilisation de la règle 64 (expr)
+
+
+État 126
+
+   57 expr: expr . '+' expr
+   58     | expr . '*' expr
+   59     | expr . '-' expr
+   61     | expr . '/' expr
+   62     | expr . '^' expr
+   63     | expr . '<' expr
+   64     | expr . '>' expr
+   65     | expr . INF expr
+   66     | expr . SUPP expr
+   67     | expr . '=' expr
+   67     | expr '=' expr .
+   68     | expr . DIFF expr
+   69     | expr . AND expr
+   70     | expr . OR expr
+   71     | expr . XOR expr
+
+    INF   décalage et aller à l'état 80
+    SUPP  décalage et aller à l'état 81
+    DIFF  décalage et aller à l'état 82
+    '+'   décalage et aller à l'état 83
+    '-'   décalage et aller à l'état 84
+    OR    décalage et aller à l'état 85
+    XOR   décalage et aller à l'état 86
+    '*'   décalage et aller à l'état 87
+    '/'   décalage et aller à l'état 88
+    AND   décalage et aller à l'état 89
+    '^'   décalage et aller à l'état 90
+    '<'   décalage et aller à l'état 91
+    '>'   décalage et aller à l'état 92
+    '='   décalage et aller à l'état 93
+
+    INF       [réduction par utilisation de la règle 67 (expr)]
+    SUPP      [réduction par utilisation de la règle 67 (expr)]
+    DIFF      [réduction par utilisation de la règle 67 (expr)]
+    '+'       [réduction par utilisation de la règle 67 (expr)]
+    '-'       [réduction par utilisation de la règle 67 (expr)]
+    OR        [réduction par utilisation de la règle 67 (expr)]
+    XOR       [réduction par utilisation de la règle 67 (expr)]
+    '*'       [réduction par utilisation de la règle 67 (expr)]
+    '/'       [réduction par utilisation de la règle 67 (expr)]
+    AND       [réduction par utilisation de la règle 67 (expr)]
+    '^'       [réduction par utilisation de la règle 67 (expr)]
+    '<'       [réduction par utilisation de la règle 67 (expr)]
+    '>'       [réduction par utilisation de la règle 67 (expr)]
+    '='       [réduction par utilisation de la règle 67 (expr)]
+    $défaut  réduction par utilisation de la règle 67 (expr)
+
+
+État 127
+
+   29 instr: IF expA THEN instr . B C
+   30      | IF expA THEN instr . ELSE B instr C
+
+    ELSE  décalage et aller à l'état 137
+
+    ELSE      [réduction par utilisation de la règle 42 (B)]
+    $défaut  réduction par utilisation de la règle 42 (B)
+
+    B  aller à l'état 138
+
+
+État 128
+
+   31 instr: WHILE D expE DO . instr F
+
+    IDENT  décalage et aller à l'état 30
+    RET    décalage et aller à l'état 31
+    IF     décalage et aller à l'état 32
+    WHILE  décalage et aller à l'état 33
+    BEG    décalage et aller à l'état 34
+    READ   décalage et aller à l'état 35
+    WRITE  décalage et aller à l'état 36
+
+    instr   aller à l'état 139
+    lvalue  aller à l'état 38
+
+
+État 129
+
+   47 sequence: instr ';' sequence .
+
+    $défaut  réduction par utilisation de la règle 47 (sequence)
+
+
+État 130
+
+   17 rangelist: ENTIER '.' '.' . ENTIER
+   18          | ENTIER '.' '.' . ENTIER ',' rangelist
+
+    ENTIER  décalage et aller à l'état 140
+
+
+État 131
+
+   16 arraytype: ARRAY '[' rangelist ']' OF . atomictype
+
+    INT   décalage et aller à l'état 22
+    BOOL  décalage et aller à l'état 23
+    UNIT  décalage et aller à l'état 24
+
+    atomictype  aller à l'état 141
+
+
+État 132
+
+   28 par: REF IDENT ':' typename .
+
+    $défaut  réduction par utilisation de la règle 28 (par)
+
+
+État 133
+
+   23 fundecl: FUNCT IDENT '(' parlist ')' ':' atomictype . $@4 $@5 vardecllist instr
+
+    $défaut  réduction par utilisation de la règle 21 ($@4)
+
+    $@4  aller à l'état 142
+
+
+État 134
+
+   53 exprlist: expr ',' exprlist .
+
+    $défaut  réduction par utilisation de la règle 53 (exprlist)
+
+
+État 135
+
+   76 expr: IDENT '[' exprlist ']' .
+
+    $défaut  réduction par utilisation de la règle 76 (expr)
+
+
+État 136
+
+   74 expr: IDENT '(' exprlist ')' . $@6
+
+    $défaut  réduction par utilisation de la règle 73 ($@6)
+
+    $@6  aller à l'état 143
+
+
+État 137
+
+   30 instr: IF expA THEN instr ELSE . B instr C
+
+    $défaut  réduction par utilisation de la règle 42 (B)
+
+    B  aller à l'état 144
+
+
+État 138
+
+   29 instr: IF expA THEN instr B . C
+
+    $défaut  réduction par utilisation de la règle 43 (C)
+
+    C  aller à l'état 145
+
+
+État 139
+
+   31 instr: WHILE D expE DO instr . F
+
+    $défaut  réduction par utilisation de la règle 46 (F)
+
+    F  aller à l'état 146
+
+
+État 140
+
+   17 rangelist: ENTIER '.' '.' ENTIER .
+   18          | ENTIER '.' '.' ENTIER . ',' rangelist
+
+    ','  décalage et aller à l'état 147
+
+    $défaut  réduction par utilisation de la règle 17 (rangelist)
+
+
+État 141
+
+   16 arraytype: ARRAY '[' rangelist ']' OF atomictype .
+
+    $défaut  réduction par utilisation de la règle 16 (arraytype)
+
+
+État 142
+
+   23 fundecl: FUNCT IDENT '(' parlist ')' ':' atomictype $@4 . $@5 vardecllist instr
+
+    $défaut  réduction par utilisation de la règle 22 ($@5)
+
+    $@5  aller à l'état 148
+
+
+État 143
+
+   74 expr: IDENT '(' exprlist ')' $@6 .
+
+    $défaut  réduction par utilisation de la règle 74 (expr)
+
+
+État 144
+
+   30 instr: IF expA THEN instr ELSE B . instr C
+
+    IDENT  décalage et aller à l'état 30
+    RET    décalage et aller à l'état 31
+    IF     décalage et aller à l'état 32
+    WHILE  décalage et aller à l'état 33
+    BEG    décalage et aller à l'état 34
+    READ   décalage et aller à l'état 35
+    WRITE  décalage et aller à l'état 36
+
+    instr   aller à l'état 149
+    lvalue  aller à l'état 38
+
+
+État 145
+
+   29 instr: IF expA THEN instr B C .
+
+    $défaut  réduction par utilisation de la règle 29 (instr)
+
+
+État 146
+
+   31 instr: WHILE D expE DO instr F .
+
+    $défaut  réduction par utilisation de la règle 31 (instr)
+
+
+État 147
+
+   18 rangelist: ENTIER '.' '.' ENTIER ',' . rangelist
+
+    ENTIER  décalage et aller à l'état 65
+
+    rangelist  aller à l'état 150
+
+
+État 148
+
+   23 fundecl: FUNCT IDENT '(' parlist ')' ':' atomictype $@4 $@5 . vardecllist instr
+
+    VAR  décalage et aller à l'état 6
+
+    $défaut  réduction par utilisation de la règle 5 (vardecllist)
+
+    vardecllist  aller à l'état 151
+    vardecl      aller à l'état 8
+
+
+État 149
+
+   30 instr: IF expA THEN instr ELSE B instr . C
+
+    $défaut  réduction par utilisation de la règle 43 (C)
+
+    C  aller à l'état 152
+
+
+État 150
+
+   18 rangelist: ENTIER '.' '.' ENTIER ',' rangelist .
+
+    $défaut  réduction par utilisation de la règle 18 (rangelist)
+
+
+État 151
+
+   23 fundecl: FUNCT IDENT '(' parlist ')' ':' atomictype $@4 $@5 vardecllist . instr
+
+    IDENT  décalage et aller à l'état 30
+    RET    décalage et aller à l'état 31
+    IF     décalage et aller à l'état 32
+    WHILE  décalage et aller à l'état 33
+    BEG    décalage et aller à l'état 34
+    READ   décalage et aller à l'état 35
+    WRITE  décalage et aller à l'état 36
+
+    instr   aller à l'état 153
+    lvalue  aller à l'état 38
+
+
+État 152
+
+   30 instr: IF expA THEN instr ELSE B instr C .
+
+    $défaut  réduction par utilisation de la règle 30 (instr)
+
+
+État 153
+
+   23 fundecl: FUNCT IDENT '(' parlist ')' ':' atomictype $@4 $@5 vardecllist instr .
+
+    $défaut  réduction par utilisation de la règle 23 (fundecl)

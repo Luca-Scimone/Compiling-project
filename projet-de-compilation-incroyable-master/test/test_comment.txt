@@ -1,0 +1,10 @@
+(* Ceci est un exemple de code SCALPA *)
+program testcomment
+    var a,b,c : int;
+		begin
+            (* Ceci est un exemple de code SCALPA *)
+			a := 3;
+			b := 4;
+			c := a + b + 8;
+			write c;
+	    end
